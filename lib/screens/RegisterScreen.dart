@@ -120,7 +120,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       child: Image.asset('assets/icons/icon.png')),
                 ),
               ),
-              const Text("Register"),
               const SizedBox(
                 height: 10,
               ),
@@ -169,8 +168,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Container(
-                      decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 188, 216, 189),
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 219, 222, 219),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: Row(
                         children: <Widget>[
@@ -183,8 +183,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             },
                             initialSelection: countryCode,
                             favorite: [countryCode, country],
-                            // initialSelection: 'नेपाल',
-                            // favorite: const ['+977', 'नेपाल'],
                             showCountryOnly: false,
                             showOnlyCountryWhenClosed: false,
                             alignLeft: false,
@@ -197,13 +195,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 labelText: 'Phone Number',
                               ),
                               keyboardType: TextInputType.phone,
-                              // onChanged: (value) {
-                              //   setState(() {
-                              //     phoneNumber = value;
-                              //   });
-                              // },
                             ),
                           ),
+                          Container(
+                            width: 10,
+                          )
                         ],
                       ),
                     )
@@ -216,8 +212,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Container(
-                  decoration: const BoxDecoration(
-                    color: Color.fromARGB(255, 188, 216, 189),
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 215, 218, 215),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -229,7 +226,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         selectedDate == null
                             ? 'Please select a date'
                             : selectedDate.toString(),
-                      )
+                      ),
+                      Container(
+                        width: 10,
+                      ),
                     ],
                   ),
                 ),
@@ -251,7 +251,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       },
                       child: const Text(
                         'Register',
-                        style: TextStyle(color: Colors.white, fontSize: 25),
+                        style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                     ),
                   ),
@@ -269,7 +269,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       },
                       child: const Text(
                         'Clear',
-                        style: TextStyle(color: Colors.white, fontSize: 25),
+                        style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                     ),
                   ),
