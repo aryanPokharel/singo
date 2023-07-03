@@ -1,7 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:motion_toast/motion_toast.dart';
 import 'package:singo/constants.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -13,19 +16,15 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   dynamic countryCode = '+977';
-  dynamic country = 'NEP';
-  String? phoneNumber;
+  dynamic country = 'नेपाल';
 
   DateTime? selectedDate;
 
   // Declaring controllers
   var fullNameController = TextEditingController();
   var emailController = TextEditingController();
-
-  var phoneController = TextEditingController();
-  var dobController = TextEditingController();
-
   var passwordController = TextEditingController();
+  var phoneNumberController = TextEditingController();
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -50,7 +49,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       'phone': {
         'countryCode': countryCode,
         'country': country,
-        'number': phoneNumber,
+        'number': phoneNumberController.text,
       },
       'dob': selectedDate.toString(),
     });
@@ -59,7 +58,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
         headers: {"Content-Type": "application/json"}, body: body);
 
     if (response.statusCode == 200) {
-      print("Connected");
+      if (response.body == "1") {
+        MotionToast(
+                primaryColor: Colors.green,
+                height: 50,
+                width: 320,
+                title: const Text("Success!"),
+                description: const Text("Account created!"),
+                icon: Icons.login_rounded)
+            .show(context);
+      } else {
+        MotionToast(
+                primaryColor: Colors.red,
+                height: 50,
+                width: 320,
+                title: const Text("Failure!"),
+                description: const Text("Couldn't create account!"),
+                icon: Icons.wrong_location)
+            .show(context);
+      }
+    } else {
+      MotionToast(
+              primaryColor: Colors.red,
+              height: 50,
+              width: 320,
+              title: const Text("Failure!"),
+              description: const Text("Server Error"),
+              icon: Icons.error)
+          .show(context);
     }
   }
 
@@ -68,6 +94,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
       fullNameController.clear();
       emailController.clear();
       passwordController.clear();
+      phoneNumberController.clear();
+      country = "नेपाल";
+      countryCode = "+977";
+      selectedDate = null;
     });
   }
 
@@ -151,8 +181,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 country = code.name;
                               });
                             },
-                            initialSelection: 'नेपाल',
-                            favorite: const ['+977', 'नेपाल'],
+                            initialSelection: countryCode,
+                            favorite: [countryCode, country],
+                            // initialSelection: 'नेपाल',
+                            // favorite: const ['+977', 'नेपाल'],
                             showCountryOnly: false,
                             showOnlyCountryWhenClosed: false,
                             alignLeft: false,
@@ -160,15 +192,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           const SizedBox(width: 16.0),
                           Expanded(
                             child: TextField(
+                              controller: phoneNumberController,
                               decoration: const InputDecoration(
                                 labelText: 'Phone Number',
                               ),
                               keyboardType: TextInputType.phone,
-                              onChanged: (value) {
-                                setState(() {
-                                  phoneNumber = value;
-                                });
-                              },
+                              // onChanged: (value) {
+                              //   setState(() {
+                              //     phoneNumber = value;
+                              //   });
+                              // },
                             ),
                           ),
                         ],
