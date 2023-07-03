@@ -10,8 +10,16 @@ const cors = require('cors')
 app.use(cors({origin: true, credentials: true}));
 
 app.use(bodyParser.json());
+// Importing DB
+// const db = require('./db/db_connection')
+// app.use(db)
 
 // Importing the routers
+const userRouter = require('./routers/userRouter')
+
+
+// Use the routers
+app.use('/users',userRouter)
 app.use(express.json())
 
 
