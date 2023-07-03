@@ -13,6 +13,7 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   dynamic countryCode = '+977';
+  dynamic country = 'NEP';
   String? phoneNumber;
 
   DateTime? selectedDate;
@@ -42,24 +43,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Future registration() async {
+    final body = jsonEncode({
+      'fullname': fullNameController.text,
+      'email': emailController.text,
+      'password': passwordController.text,
+      'phone': {
+        'countryCode': countryCode,
+        'country': country,
+        'number': phoneNumber,
+      },
+      'dob': selectedDate.toString(),
+    });
     http.Response response;
-    response = await http.post(
-      Uri.parse("$baseUrl/users/"),
-      headers: {"Content-Type": "application/json"},
-      body: jsonEncode(
-        <String, String>{
-          'fullname': fullNameController.text,
-          'email': emailController.text,
-          'password': passwordController.text,
-          'phone': countryCode + phoneNumber,
-          'dob': selectedDate.toString(),
-        },
-      ),
-    );
+    response = await http.post(Uri.parse("$baseUrl/users/"),
+        headers: {"Content-Type": "application/json"}, body: body);
 
     if (response.statusCode == 200) {
       print("Connected");
     }
+  }
+
+  clear() {
+    setState(() {
+      fullNameController.clear();
+      emailController.clear();
+      passwordController.clear();
+    });
   }
 
   @override
@@ -139,6 +148,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             onChanged: (CountryCode code) {
                               setState(() {
                                 countryCode = code.dialCode;
+                                country = code.name;
                               });
                             },
                             initialSelection: 'नेपाल',
@@ -194,24 +204,46 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(
                 height: 10,
               ),
-              Container(
-                height: 50,
-                width: 250,
-                decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(20)),
-                child: ElevatedButton(
-                  onPressed: () {
-                    registration();
-                  },
-                  child: const Text(
-                    'Register',
-                    style: TextStyle(color: Colors.white, fontSize: 25),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    height: 30,
+                    decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(20)),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        registration();
+                      },
+                      child: const Text(
+                        'Register',
+                        style: TextStyle(color: Colors.white, fontSize: 25),
+                      ),
+                    ),
                   ),
-                ),
+                  Container(
+                    height: 30,
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: ElevatedButton(
+                      style:
+                          ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                      onPressed: () {
+                        clear();
+                      },
+                      child: const Text(
+                        'Clear',
+                        style: TextStyle(color: Colors.white, fontSize: 25),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(
-                height: 130,
+                height: 80,
               ),
               TextButton(
                 onPressed: () {
