@@ -143,7 +143,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Email',
-                      hintText: 'Enter valid email id as abc@gmail.com'),
+                      hintText: 'Enter valid email address'),
                 ),
               ),
               const SizedBox(

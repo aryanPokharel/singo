@@ -7,25 +7,24 @@ mongoose.set("strictQuery", true);
 mongoose.connect("mongodb://localhost/singo");
 
 router
-  .route("/")
+  .route("/login")
 
-  .get(async (req, res) => {
+  .post(async (req, res) => {
     try {
       const email = req.body.email;
       const password = req.body.password;
 
       const Users = await User.find();
 
-      var response = 'na';
-      for (var i = 0; i < Users.length; i++){
-        if ((Users[i].email == email) && (Users[i].password == password)){
-          response = "found";
+      var response;
+      for (var i = 0; i < Users.length; i++) {
+        if (Users[i].email == email && Users[i].password == password) {
+          response = Users[i]._id;
+        } else {
+          response = "Not found";
         }
-        else {
-          response = "Not found"
-        }
-    }
-      res.send(response)
+      }
+      res.send(response);
     } catch {
       res.send("-1");
     }
