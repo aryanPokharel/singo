@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:singo/screens/RegisterScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -70,10 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => const RegisterScreen()));
+                  Navigator.pushNamed(context, "/homePage");
                 },
                 child: const Text(
                   'Login',

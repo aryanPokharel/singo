@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:singo/screens/HomeScreen.dart';
 import 'package:singo/screens/LoginScreen.dart';
 import 'package:singo/screens/RegisterScreen.dart';
 
@@ -10,6 +11,7 @@ void main(List<String> args) {
       routes: {
         '/loginPage': (context) => const LoginScreen(),
         '/registerPage': (context) => const RegisterScreen(),
+        '/homePage': (context) => const HomeScreen()
       },
     ),
   );
