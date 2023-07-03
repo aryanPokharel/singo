@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 app.use(express.urlencoded({ extended: true}))
 
 const cors = require('cors') 
-app.use(cors({origin: true, credentials: true}));
+app.use(cors());
 
 app.use(bodyParser.json());
 // Importing DB

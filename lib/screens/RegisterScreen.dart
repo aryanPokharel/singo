@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'dart:convert';
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:http/http.dart' as http;
+import 'package:singo/constants.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -15,6 +17,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   DateTime? selectedDate;
 
+  // Declaring controllers
+  var fullNameController = TextEditingController();
+  var emailController = TextEditingController();
+
+  var phoneController = TextEditingController();
+  var dobController = TextEditingController();
+
+  var passwordController = TextEditingController();
+
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -27,6 +38,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
       setState(() {
         selectedDate = picked;
       });
+    }
+  }
+
+  Future registration() async {
+    http.Response response;
+    response = await http.post(
+      Uri.parse("$baseUrl/users/"),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(
+        <String, String>{
+          'fullname': fullNameController.text,
+          'email': emailController.text,
+          'password': passwordController.text,
+          'phone': countryCode + phoneNumber,
+          'dob': selectedDate.toString(),
+        },
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      print("Connected");
     }
   }
 
@@ -50,10 +82,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
               const Text("Register"),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15),
+              const SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: TextField(
-                  decoration: InputDecoration(
+                  controller: fullNameController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Full Name',
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: TextField(
+                  controller: emailController,
+                  decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Email',
                       hintText: 'Enter valid email id as abc@gmail.com'),
@@ -62,12 +111,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(
                 height: 10,
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: TextField(
-                  decoration: InputDecoration(
+                  controller: passwordController,
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Full Name',
+                    labelText: 'Create Password',
                   ),
                 ),
               ),
@@ -144,9 +194,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(
                 height: 10,
               ),
-              const SizedBox(
-                height: 10,
-              ),
               Container(
                 height: 50,
                 width: 250,
@@ -155,7 +202,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     borderRadius: BorderRadius.circular(20)),
                 child: ElevatedButton(
                   onPressed: () {
-                    print('$countryCode $phoneNumber');
+                    registration();
                   },
                   child: const Text(
                     'Register',

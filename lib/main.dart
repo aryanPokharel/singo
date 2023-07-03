@@ -7,7 +7,7 @@ void main(List<String> args) {
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/registerPage',
+      initialRoute: '/loginPage',
       routes: {
         '/loginPage': (context) => const LoginScreen(),
         '/registerPage': (context) => const RegisterScreen(),

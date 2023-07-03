@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:singo/constants.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -8,6 +12,22 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  Future authentication() async {
+    http.Response response;
+    response = await http.post(Uri.parse("$baseUrl/users/"),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(<String, String>{
+          'fullname': "ram bahadur",
+          'email': "abc@yahoo.com",
+          'phone': "9876543210",
+          'dob': '2020/2/2'
+        }));
+
+    if (response.statusCode == 200) {
+      print("Connected");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,7 +89,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, "/homePage");
+                  authentication();
+                  // Navigator.pushNamed(context, "/homePage");
                 },
                 child: const Text(
                   'Login',
