@@ -32,6 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (response.statusCode == 200) {
       if (response.body != "Not found") {
+        // ignore: use_build_context_synchronously
         Navigator.pushNamed(context, "/homePage");
       } else {
         // ignore: use_build_context_synchronously

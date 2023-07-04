@@ -28,6 +28,10 @@ const userSchema = new mongoose.Schema({
   dob: {
     type: String,
   },
+  singer : {
+    type : Boolean,
+    default : false,
+  }
 });
 
 module.exports = mongoose.model("User", userSchema);
