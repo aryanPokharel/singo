@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:singo/screens/ProfileScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -60,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: const [
           Center(child: Text('Home Page')),
           Center(child: Text('Logs Page')),
-          Center(child: Text('Profile Page')),
+          ProfileScreen(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -83,8 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Add your logic for the floating action button here
-          print('Floating Action Button pressed');
+          Navigator.pushNamed(context, "/requestPerformancePage");
         },
         child: const Icon(Icons.add),
       ),

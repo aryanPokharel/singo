@@ -53,8 +53,17 @@ router
 
       var response;
       for (var i = 0; i < Users.length; i++) {
+        response = "nA";
+
         if (Users[i].email == email && Users[i].password == password) {
-          response = Users[i]._id;
+          response = {
+            id: Users[i]._id,
+            fullName: Users[i].fullName,
+            email: Users[i].email,
+            password: Users[i].password,
+            phone: Users[i].phone,
+            dob: Users[i].dob,
+          };
         } else {
           response = "Not found";
         }

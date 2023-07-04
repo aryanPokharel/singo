@@ -16,10 +16,13 @@ app.use(bodyParser.json());
 
 // Importing the routers
 const userRouter = require('./routers/userRouter')
+const performanceRouter = require('./routers/performaceRouter')
 
 
 // Use the routers
 app.use('/users',userRouter)
+app.use('/performances', performanceRouter)
+
 app.use(express.json())
 
 

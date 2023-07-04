@@ -3,7 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:motion_toast/motion_toast.dart';
+import 'package:provider/provider.dart';
 import 'package:singo/constants.dart';
+import 'package:singo/models/User.dart';
+import 'package:singo/providers/user_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -33,6 +36,16 @@ class _LoginScreenState extends State<LoginScreen> {
     if (response.statusCode == 200) {
       if (response.body != "Not found") {
         // ignore: use_build_context_synchronously
+
+        User myUser = User(
+          json.decode(response.body)["id"],
+          json.decode(response.body)["fullName"],
+          json.decode(response.body)["email"],
+          json.decode(response.body)["password"],
+          json.decode(response.body)["phone"],
+          json.decode(response.body)["dob"],
+        );
+        context.read<UserProvider>().setUser(myUser);
         Navigator.pushNamed(context, "/homePage");
       } else {
         // ignore: use_build_context_synchronously
