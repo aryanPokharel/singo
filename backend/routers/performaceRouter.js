@@ -54,5 +54,9 @@ router
       res.send("-1");
     }
   });
+
+  router.route('/test').get((req,res) => {
+    res.send("yeah")
+  })
   
 module.exports = router;
