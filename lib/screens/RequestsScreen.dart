@@ -140,7 +140,6 @@ class _RequestsScreenState extends State<RequestsScreen> {
                 );
               },
             ),
-            // Widget for Tab 2
             ListView.builder(
               itemCount: yourList.length,
               itemBuilder: (context, index) {
@@ -148,11 +147,9 @@ class _RequestsScreenState extends State<RequestsScreen> {
 
                 return Card(
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                        20.0), // Set the desired border radius value
+                    borderRadius: BorderRadius.circular(20.0),
                   ),
-                  elevation:
-                      4, // Adjust the elevation value for the desired shadow effect
+                  elevation: 4,
                   margin: const EdgeInsets.symmetric(
                       horizontal: 16.0, vertical: 10),
                   child: Container(
