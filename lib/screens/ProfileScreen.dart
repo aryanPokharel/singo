@@ -23,10 +23,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const SizedBox(
                 height: 10,
               ),
-              const CircleAvatar(
+              CircleAvatar(
                 radius: 80,
-                backgroundImage: NetworkImage(
-                    'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png'),
+                backgroundImage: NetworkImage(myUser.photo),
               ),
               const SizedBox(
                 height: 10,

@@ -7,14 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:singo/constants.dart';
 
 class UserProvider with ChangeNotifier {
-  late User _user = User(
-    "N/A",
-    "N/A",
-    "N/A",
-    "N/A",
-    "N/A",
-    "N/A",
-  );
+  late User _user = User("N/A", "N/A", "N/A", "N/A", "N/A", "N/A", "N/A");
 
   User get user => _user;
 
@@ -37,8 +30,6 @@ class UserProvider with ChangeNotifier {
         var requests = json.decode(response.body);
         _requestList = requests;
         notifyListeners();
-      } else {
-        print("No requests");
       }
     }
   }

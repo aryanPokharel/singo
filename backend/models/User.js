@@ -31,6 +31,10 @@ const userSchema = new mongoose.Schema({
   singer : {
     type : Boolean,
     default : false,
+  },
+  photo : {
+    type : String,
+    default : 'https://res.cloudinary.com/dr27vplim/image/upload/v1688578378/Singo/ProfilePictures/defaultMale_hn2enf.jpg'
   }
 });
 

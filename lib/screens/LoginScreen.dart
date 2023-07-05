@@ -44,6 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
           json.decode(response.body)["password"],
           json.decode(response.body)["phone"],
           json.decode(response.body)["dob"],
+          json.decode(response.body)['photo'],
         );
         context.read<UserProvider>().setUser(myUser);
         Navigator.pushNamed(context, "/homePage");

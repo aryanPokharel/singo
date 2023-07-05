@@ -4,7 +4,9 @@ const mongoose = require("mongoose");
 const User = require("../models/User");
 
 mongoose.set("strictQuery", true);
-mongoose.connect("mongodb+srv://ourSingo:cBJG4iJF9LAIgK5r@cluster0.2w5z0ad.mongodb.net/SingoAppDb?retryWrites=true&w=majority");
+mongoose.connect(
+  "mongodb+srv://ourSingo:cBJG4iJF9LAIgK5r@cluster0.2w5z0ad.mongodb.net/SingoAppDb?retryWrites=true&w=majority"
+);
 
 router.route("/").post(async (req, res) => {
   try {
@@ -63,6 +65,7 @@ router
             password: Users[i].password,
             phone: Users[i].phone,
             dob: Users[i].dob,
+            photo: Users[i].photo,
           };
         } else {
           response = "Not found";
