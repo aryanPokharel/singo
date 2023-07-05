@@ -13,7 +13,7 @@ void main(List<String> args) {
       create: (_) => UserProvider(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: '/homePage',
+        initialRoute: '/loginPage',
         routes: {
           '/splashScreen': (context) => const SplashScreen(),
           '/loginPage': (context) => const LoginScreen(),

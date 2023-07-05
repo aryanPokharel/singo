@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:motion_toast/motion_toast.dart';
+import 'package:provider/provider.dart';
 import 'package:singo/constants.dart';
+import 'package:singo/providers/user_provider.dart';
 
 class RequestPerformanceScreen extends StatefulWidget {
   const RequestPerformanceScreen({super.key});
@@ -25,52 +27,53 @@ class _RequestPerformanceScreenState extends State<RequestPerformanceScreen> {
   var descriptionController = TextEditingController();
   var rateController = TextEditingController();
 
-  void _submitForm() async {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
+  @override
+  Widget build(BuildContext context) {
+    var myUser = context.watch<UserProvider>().user;
+    void _submitForm() async {
+      if (_formKey.currentState!.validate()) {
+        _formKey.currentState!.save();
 
-      http.Response response;
-      response = await http.post(
-        Uri.parse("$baseUrl/performances/post"),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode(
-          <String, String>{
-            'createdBy': "64a2fcc88733abf1959da1c1",
-            'title': titleController.text,
-            'description': descriptionController.text,
-            'rate': rateController.text,
-          },
-        ),
-      );
+        http.Response response;
+        response = await http.post(
+          Uri.parse("$baseUrl/performances/post"),
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode(
+            <String, String>{
+              'createdBy': myUser.id,
+              'title': titleController.text,
+              'description': descriptionController.text,
+              'rate': rateController.text,
+            },
+          ),
+        );
 
-      if (response.statusCode == 200) {
-        if (response.body != "Not found") {
-          // ignore: use_build_context_synchronously
-          MotionToast(
-                  primaryColor: Colors.green,
-                  height: 50,
-                  width: 320,
-                  title: const Text("Success!"),
-                  description: const Text("Request posted"),
-                  icon: Icons.wrong_location)
-              .show(context);
-        } else {
-          // ignore: use_build_context_synchronously
-          MotionToast(
-                  primaryColor: Colors.red,
-                  height: 50,
-                  width: 320,
-                  title: const Text("Failure!"),
-                  description: const Text("Request couldn't be posted"),
-                  icon: Icons.wrong_location)
-              .show(context);
+        if (response.statusCode == 200) {
+          if (response.body != "Not found") {
+            // ignore: use_build_context_synchronously
+            MotionToast(
+                    primaryColor: Colors.green,
+                    height: 50,
+                    width: 320,
+                    title: const Text("Success!"),
+                    description: const Text("Request posted"),
+                    icon: Icons.wrong_location)
+                .show(context);
+          } else {
+            // ignore: use_build_context_synchronously
+            MotionToast(
+                    primaryColor: Colors.red,
+                    height: 50,
+                    width: 320,
+                    title: const Text("Failure!"),
+                    description: const Text("Request couldn't be posted"),
+                    icon: Icons.wrong_location)
+                .show(context);
+          }
         }
       }
     }
-  }
 
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Simple Form Demo'),
