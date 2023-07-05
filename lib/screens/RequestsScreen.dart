@@ -1,8 +1,5 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'package:singo/constants.dart';
 import 'package:singo/providers/user_provider.dart';
 
 class RequestsScreen extends StatefulWidget {
@@ -16,23 +13,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
   @override
   void initState() {
     super.initState();
-    getRequests();
-  }
-
-  Future<void> getRequests() async {
-    http.Response response = await http.get(
-      Uri.parse("$baseUrl/performances/"),
-      headers: {"Content-Type": "application/json"},
-    );
-
-    if (response.statusCode == 200) {
-      if (response.body != "Not found") {
-        var requests = json.decode(response.body);
-        context.read<UserProvider>().setRequest(requests);
-      } else {
-        print("No requests");
-      }
-    }
+    context.read<UserProvider>().fetchRequests();
   }
 
   @override
@@ -51,7 +32,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
       }
     }
     return DefaultTabController(
-      length: 2, // Specify the number of tabs
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           elevation: 0,

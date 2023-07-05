@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:singo/models/User.dart';
+
+import 'package:http/http.dart' as http;
+import 'package:singo/constants.dart';
 
 class UserProvider with ChangeNotifier {
   late User _user = User(
@@ -21,10 +26,22 @@ class UserProvider with ChangeNotifier {
   // State for requests
   List<dynamic> _requestList = [];
 
-  List<dynamic> get requestList => _requestList;
+  void fetchRequests() async {
+    http.Response response = await http.get(
+      Uri.parse("$baseUrl/performances/"),
+      headers: {"Content-Type": "application/json"},
+    );
 
-  void setRequest(List<dynamic> newRequests) {
-    _requestList = newRequests;
-    notifyListeners();
+    if (response.statusCode == 200) {
+      if (response.body != "Not found") {
+        var requests = json.decode(response.body);
+        _requestList = requests;
+        notifyListeners();
+      } else {
+        print("No requests");
+      }
+    }
   }
+
+  List<dynamic> get requestList => _requestList;
 }

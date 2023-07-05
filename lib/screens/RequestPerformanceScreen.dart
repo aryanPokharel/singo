@@ -51,6 +51,7 @@ class _RequestPerformanceScreenState extends State<RequestPerformanceScreen> {
         if (response.statusCode == 200) {
           if (response.body != "Not found") {
             // ignore: use_build_context_synchronously
+            context.read<UserProvider>().fetchRequests();
             MotionToast(
                     primaryColor: Colors.green,
                     height: 50,

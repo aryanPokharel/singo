@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const User = require("../models/User");
 
 mongoose.set("strictQuery", true);
-mongoose.connect("mongodb://localhost/singo");
+mongoose.connect("mongodb+srv://ourSingo:cBJG4iJF9LAIgK5r@cluster0.2w5z0ad.mongodb.net/SingoAppDb?retryWrites=true&w=majority");
 
 router.route("/").post(async (req, res) => {
   try {
