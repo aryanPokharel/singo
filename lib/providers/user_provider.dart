@@ -14,8 +14,17 @@ class UserProvider with ChangeNotifier {
   User get user => _user;
 
   void setUser(User newUser) {
-    _user =
-        newUser; // Use the class field (_user) instead of the parameter (user)
+    _user = newUser;
+    notifyListeners();
+  }
+
+  // State for requests
+  List<dynamic> _requestList = [];
+
+  List<dynamic> get requestList => _requestList;
+
+  void setRequest(List<dynamic> newRequests) {
+    _requestList = newRequests;
     notifyListeners();
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:singo/screens/ProfileScreen.dart';
+import 'package:singo/screens/RequestsScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -60,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
         index: _selectedIndex,
         children: const [
           Center(child: Text('Home Page')),
-          Center(child: Text('Logs Page')),
+          RequestsScreen(),
           ProfileScreen(),
         ],
       ),
@@ -72,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.book),
-            label: 'Logs',
+            label: 'Requests',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),

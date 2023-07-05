@@ -8,18 +8,21 @@ import 'package:singo/screens/RequestPerformanceScreen.dart';
 import 'package:singo/screens/SplashScreen.dart';
 
 void main(List<String> args) {
-  runApp(ChangeNotifierProvider<UserProvider>(
-    create: (_) => UserProvider(),
-    child: MaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: '/loginPage',
-      routes: {
-        '/splashScreen': (context) => const SplashScreen(),
-        '/loginPage': (context) => const LoginScreen(),
-        '/registerPage': (context) => const RegisterScreen(),
-        '/homePage': (context) => const HomeScreen(),
-        '/requestPerformancePage': (context) => const RequestPerformanceScreen()
-      },
+  runApp(
+    ChangeNotifierProvider<UserProvider>(
+      create: (_) => UserProvider(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/homePage',
+        routes: {
+          '/splashScreen': (context) => const SplashScreen(),
+          '/loginPage': (context) => const LoginScreen(),
+          '/registerPage': (context) => const RegisterScreen(),
+          '/homePage': (context) => const HomeScreen(),
+          '/requestPerformancePage': (context) =>
+              const RequestPerformanceScreen()
+        },
+      ),
     ),
-  ));
+  );
 }
