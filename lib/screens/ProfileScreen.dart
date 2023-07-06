@@ -46,6 +46,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 style: TextStyle(fontSize: 15, fontFamily: 'EBGaramond'),
               ),
               const SizedBox(
+                height: 2,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            const Color.fromARGB(255, 208, 192, 45)),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/loginPage');
+                    },
+                    child: const Text("Log Out"),
+                  ),
+                  const SizedBox(
+                    width: 6,
+                  ),
+                  ElevatedButton(
+                    style:
+                        ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                    onPressed: () {},
+                    child: const Text("Delete Account"),
+                  ),
+                ],
+              ),
+              const SizedBox(
                 height: 10,
                 width: 150,
                 child: Divider(

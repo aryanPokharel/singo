@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:singo/providers/user_provider.dart';
+
+import 'package:http/http.dart' as http;
+import 'package:singo/constants.dart';
 
 class RequestsScreen extends StatefulWidget {
   const RequestsScreen({super.key});
@@ -14,6 +19,25 @@ class _RequestsScreenState extends State<RequestsScreen> {
   void initState() {
     super.initState();
     context.read<UserProvider>().fetchRequests();
+  }
+
+  Future deleteMyRequest(dynamic toDeleteId) async {
+    http.Response response;
+    response = await http.delete(
+      Uri.parse("$baseUrl/performances/delete"),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(
+        <String, String>{
+          'requestId': toDeleteId.toString(),
+        },
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      if (response.body == "1") {
+        context.read<UserProvider>().fetchRequests();
+      }
+    }
   }
 
   @override
@@ -64,11 +88,9 @@ class _RequestsScreenState extends State<RequestsScreen> {
 
                 return Card(
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                        20.0), // Set the desired border radius value
+                    borderRadius: BorderRadius.circular(20.0),
                   ),
-                  elevation:
-                      4, // Adjust the elevation value for the desired shadow effect
+                  elevation: 4,
                   margin: const EdgeInsets.symmetric(
                       horizontal: 16.0, vertical: 10),
                   child: Container(
@@ -133,52 +155,67 @@ class _RequestsScreenState extends State<RequestsScreen> {
                   elevation: 4,
                   margin: const EdgeInsets.symmetric(
                       horizontal: 16.0, vertical: 10),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 164, 199, 216),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    constraints: const BoxConstraints(maxWidth: 540.0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            request['title'],
-                            style: const TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+                  child: Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.lime,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        constraints: const BoxConstraints(maxWidth: 540.0),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    request['title'],
+                                    style: const TextStyle(
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    color: Colors.red,
+                                    icon: const Icon(Icons.delete),
+                                    onPressed: () {
+                                      deleteMyRequest(request['_id']);
+                                    },
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 8.0),
+                              Text(
+                                request['description'],
+                                style: const TextStyle(fontSize: 16.0),
+                              ),
+                              const SizedBox(height: 10),
+                              Text(
+                                'By: ${request['createdBy']}',
+                                style: const TextStyle(fontSize: 16.0),
+                              ),
+                              const SizedBox(height: 8.0),
+                              Text(
+                                'Rs.${request['rate']}',
+                                style: const TextStyle(fontSize: 16.0),
+                              ),
+                              const SizedBox(height: 8.0),
+                              Text(
+                                'Created: ${request['createdAt']}',
+                                style: const TextStyle(
+                                  fontSize: 12.0,
+                                  color: Color.fromARGB(255, 67, 63, 63),
+                                ),
+                              ),
+                            ],
                           ),
-                          const SizedBox(height: 8.0),
-                          Text(
-                            request['description'],
-                            style: const TextStyle(fontSize: 16.0),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'By : ${request['createdBy']}',
-                            style: const TextStyle(fontSize: 16.0),
-                          ),
-                          const SizedBox(height: 8.0),
-                          Text(
-                            'Rs.${request['rate']}',
-                            style: const TextStyle(fontSize: 16.0),
-                          ),
-                          const SizedBox(height: 8.0),
-                          Text(
-                            'Created : ${request['createdAt']}',
-                            style: const TextStyle(
-                              fontSize: 12.0,
-                              color: Color.fromARGB(255, 67, 63, 63),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 );
               },
