@@ -52,12 +52,10 @@ router
       const password = req.body.password;
 
       const Users = await User.find();
+      var response = "Not found";
 
-      var response;
       for (var i = 0; i < Users.length; i++) {
-        response = "nA";
-
-        if (Users[i].email == email && Users[i].password == password) {
+        if (Users[i].email === email && Users[i].password === password) {
           response = {
             id: Users[i]._id,
             fullName: Users[i].fullName,
@@ -67,8 +65,7 @@ router
             dob: Users[i].dob,
             photo: Users[i].photo,
           };
-        } else {
-          response = "Not found";
+          break;
         }
       }
       res.send(response);
