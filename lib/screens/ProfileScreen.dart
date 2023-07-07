@@ -53,8 +53,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            const Color.fromARGB(255, 208, 192, 45)),
+                      backgroundColor: const Color.fromARGB(255, 187, 170, 22),
+                    ),
                     onPressed: () {
                       Navigator.pushNamed(context, '/loginPage');
                     },
@@ -67,7 +67,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     style:
                         ElevatedButton.styleFrom(backgroundColor: Colors.red),
                     onPressed: () {},
-                    child: const Text("Delete Account"),
+                    child: const Text("Delete"),
+                  ),
+                  const SizedBox(
+                    width: 6,
+                  ),
+                  ElevatedButton(
+                    style:
+                        ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                    onPressed: () {},
+                    child: const Text("Edit"),
                   ),
                 ],
               ),

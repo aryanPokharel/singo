@@ -253,7 +253,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
                           child: Container(
                             color: Colors.black.withOpacity(0.5),
                             alignment: Alignment.center,
-                            padding: const EdgeInsets.fromLTRB(0, 220, 0, 220),
+                            padding: const EdgeInsets.fromLTRB(0, 200, 0, 200),
                             child: Card(
                               elevation: 4,
                               margin: const EdgeInsets.all(16.0),
@@ -295,7 +295,9 @@ class _RequestsScreenState extends State<RequestsScreen> {
                                         ElevatedButton(
                                           style: ElevatedButton.styleFrom(
                                               backgroundColor: Colors.red),
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            _toggleOverlay();
+                                          },
                                           child: const Text('No'),
                                         ),
                                       ],
