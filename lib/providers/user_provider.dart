@@ -35,4 +35,12 @@ class UserProvider with ChangeNotifier {
   }
 
   List<dynamic> get requestList => _requestList;
+
+  // state for working with requests
+  dynamic _requestToEdit;
+  dynamic get requestToEdit => _requestToEdit;
+  void setRequestToEdit(dynamic requestId) {
+    _requestToEdit = requestId;
+    notifyListeners();
+  }
 }

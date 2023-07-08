@@ -55,6 +55,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
     List<dynamic> yourList = [];
     List<dynamic> globalList = [];
     var myUser = context.watch<UserProvider>().user;
+    var requestToEdit = context.watch<UserProvider>().requestToEdit;
 
     {
       for (var item in requestList) {
@@ -198,16 +199,35 @@ class _RequestsScreenState extends State<RequestsScreen> {
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
-                                            IconButton(
-                                              color: Colors.red,
-                                              icon: const Icon(Icons.delete),
-                                              onPressed: () {
-                                                _toggleOverlay();
-                                                // deleteMyRequest(request['_id']);
-                                                setState(() {
-                                                  toDelete = request['_id'];
-                                                });
-                                              },
+                                            Row(
+                                              children: [
+                                                IconButton(
+                                                  color: Colors.blue,
+                                                  icon: const Icon(Icons.edit),
+                                                  onPressed: () {
+                                                    context
+                                                        .read<UserProvider>()
+                                                        .setRequestToEdit(
+                                                            request['_id']);
+
+                                                    // _toggleOverlay();
+                                                    Navigator.pushNamed(context,
+                                                        '/editRequestScreen');
+                                                  },
+                                                ),
+                                                IconButton(
+                                                  color: Colors.red,
+                                                  icon:
+                                                      const Icon(Icons.delete),
+                                                  onPressed: () {
+                                                    _toggleOverlay();
+
+                                                    setState(() {
+                                                      toDelete = request['_id'];
+                                                    });
+                                                  },
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),
@@ -255,6 +275,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
                             alignment: Alignment.center,
                             padding: const EdgeInsets.fromLTRB(0, 200, 0, 200),
                             child: Card(
+                              color: const Color.fromARGB(255, 212, 216, 219),
                               elevation: 4,
                               margin: const EdgeInsets.all(16.0),
                               child: Padding(

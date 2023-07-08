@@ -55,9 +55,19 @@ router.route("/").get(async (req, res) => {
     res.send("-1");
   }
 });
-
-router.route("/test").get((req, res) => {
-  res.send("yeah");
+router.route("/getById").post(async (req, res) => {
+  try {
+    const performanceId = req.body.requestId;
+    var response = [];
+    const toSend = await Performance.findById({
+      _id: performanceId,
+    });
+    response.push(toSend)
+    
+    res.send(response);
+  } catch (error) {
+    res.send("-1");
+  }
 });
 
 router.route("/delete").delete(async (req, res) => {
@@ -71,6 +81,40 @@ router.route("/delete").delete(async (req, res) => {
       response = "0";
     }
     res.send(response);
+  } catch (err) {
+    res.send("-1");
+  }
+});
+
+router.route("/edit").delete(async (req, res) => {
+  try {
+    const toEdit = req.body.requestId;
+    const newTitle = req.body.title;
+    const newDescription = req.body.description;
+    const newRate = req.body.rate;
+
+    // Assuming you have a Mongoose model called "Request"
+    const Request = require("../models/Request");
+
+    // Update the document based on the ID
+    Request.findOneAndUpdate(
+      { _id: toEdit }, // Filter the document based on the provided ID
+      { title: newTitle, description: newDescription, rate: newRate }, // Update the fields
+      { new: true } // Return the modified document instead of the original
+    )
+      .then((updatedRequest) => {
+        if (updatedRequest) {
+          // Document was found and updated
+          res.send("1");
+        } else {
+          // Document with the provided ID was not found
+          res.status(404).json({ error: "Request not found" });
+        }
+      })
+      .catch((error) => {
+        // Handle any errors that occurred during the update process
+        res.status(500).json({ error: "Internal server error" });
+      });
   } catch (err) {
     res.send("-1");
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:singo/providers/user_provider.dart';
+import 'package:singo/screens/EditRequestScreen.dart';
 import 'package:singo/screens/HomeScreen.dart';
 import 'package:singo/screens/LoginScreen.dart';
 import 'package:singo/screens/RegisterScreen.dart';
@@ -19,6 +20,7 @@ void main(List<String> args) {
           '/loginPage': (context) => const LoginScreen(),
           '/registerPage': (context) => const RegisterScreen(),
           '/homePage': (context) => const HomeScreen(),
+          '/editRequestScreen': (context) => const EditRequestScreen(),
           '/requestPerformancePage': (context) =>
               const RequestPerformanceScreen()
         },
