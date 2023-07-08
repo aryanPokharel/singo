@@ -135,7 +135,6 @@ class _EditRequestScreenState extends State<EditRequestScreen> {
             : Form(
                 child: Column(
                   children: <Widget>[
-                    Text('Title : $dataReceived'),
                     TextFormField(
                       initialValue: titleValue,
                       // controller: titleController,
