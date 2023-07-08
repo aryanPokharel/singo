@@ -113,6 +113,14 @@ class _EditRequestScreenState extends State<EditRequestScreen> {
     }
   }
 
+  void clear() {
+    setState(() {
+      titleValue = '';
+      descriptionValue = '';
+      rateValue = '';
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var requestToEdit = context.watch<UserProvider>().requestToEdit;
@@ -177,9 +185,22 @@ class _EditRequestScreenState extends State<EditRequestScreen> {
                       onChanged: (val) => {rateValue = val},
                     ),
                     const SizedBox(height: 16.0),
-                    ElevatedButton(
-                      onPressed: uploadChanges,
-                      child: const Text('Submit'),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.green),
+                          onPressed: uploadChanges,
+                          child: const Icon(Icons.send),
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red),
+                          onPressed: clear,
+                          child: const Icon(Icons.clear_all),
+                        ),
+                      ],
                     ),
                   ],
                 ),

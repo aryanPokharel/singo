@@ -237,12 +237,6 @@ class _RequestsScreenState extends State<RequestsScreen> {
                                           style:
                                               const TextStyle(fontSize: 16.0),
                                         ),
-                                        const SizedBox(height: 10),
-                                        Text(
-                                          'By: ${request['createdBy']}',
-                                          style:
-                                              const TextStyle(fontSize: 16.0),
-                                        ),
                                         const SizedBox(height: 8.0),
                                         Text(
                                           'Rs.${request['rate']}',
