@@ -86,18 +86,16 @@ router.route("/delete").delete(async (req, res) => {
   }
 });
 
-router.route("/edit").delete(async (req, res) => {
+router.route("/edit").put(async (req, res) => {
   try {
     const toEdit = req.body.requestId;
     const newTitle = req.body.title;
     const newDescription = req.body.description;
     const newRate = req.body.rate;
 
-    // Assuming you have a Mongoose model called "Request"
-    const Request = require("../models/Request");
 
     // Update the document based on the ID
-    Request.findOneAndUpdate(
+    Performance.findOneAndUpdate(
       { _id: toEdit }, // Filter the document based on the provided ID
       { title: newTitle, description: newDescription, rate: newRate }, // Update the fields
       { new: true } // Return the modified document instead of the original
