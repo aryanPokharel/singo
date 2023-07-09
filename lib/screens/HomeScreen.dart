@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:singo/providers/user_provider.dart';
 import 'package:singo/screens/ProfileScreen.dart';
 import 'package:singo/screens/RequestsScreen.dart';
+
+import 'package:http/http.dart' as http;
+import 'package:singo/constants.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -30,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     List<dynamic> requestList = Provider.of<UserProvider>(context).requestList;
     List<dynamic> globalList = [];
+
     var myUser = context.watch<UserProvider>().user;
     {
       for (var item in requestList) {
@@ -38,6 +44,26 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       }
     }
+    dynamic createdBy;
+    Future getCreator(dynamic userId) async {
+      final body = jsonEncode({
+        'userId': userId,
+      });
+      http.Response response;
+      response = await http.post(Uri.parse("$baseUrl/users/getUser"),
+          headers: {"Content-Type": "application/json"}, body: body);
+
+      if (response.statusCode == 200) {
+        if (response.body != "Not Found") {
+          // print(json.decode(response.body)['fullName']);
+          setState(() {
+            createdBy = json.decode(response.body)['fullName'];
+          });
+          print(createdBy);
+        }
+      }
+    }
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       drawer: Drawer(
@@ -88,16 +114,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     top: 0,
                     right: 0,
                     child: Container(
-                      padding: const EdgeInsets.all(0.5),
+                      padding: const EdgeInsets.all(1),
                       decoration: const BoxDecoration(
                         color: Colors.red,
                         shape: BoxShape.circle,
                       ),
                       child: Text(
-                        requestList.length.toString(),
+                        requestList.length > 9
+                            ? '9+'
+                            : requestList.length.toString(),
                         style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 12,
+                          fontSize: 15,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -129,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
               itemCount: globalList.length,
               itemBuilder: (context, index) {
                 var request = globalList[index];
-
+                getCreator(request['createdBy']);
                 return Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.0),
@@ -144,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     constraints: const BoxConstraints(maxWidth: 540.0),
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -165,7 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: 10,
                           ),
                           Text(
-                            'By : ${request['createdBy']}',
+                            'By : $createdBy',
                             style: const TextStyle(fontSize: 16.0),
                           ),
                           const SizedBox(height: 8.0),
