@@ -19,6 +19,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   dynamic country = 'नेपाल';
 
   DateTime? selectedDate;
+  dynamic dateToSend;
 
   // Declaring controllers
   var fullNameController = TextEditingController();
@@ -32,11 +33,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
       initialDate: DateTime.now(),
       firstDate: DateTime(1930),
       lastDate: DateTime(2100),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.dark().copyWith(
+            colorScheme: const ColorScheme.dark(
+              primary: Colors.blue,
+            ),
+            textTheme: const TextTheme(
+              titleLarge: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
     );
 
     if (picked != null && picked != selectedDate) {
+      final DateTime pickedDate =
+          DateTime(picked.year, picked.month, picked.day);
       setState(() {
-        selectedDate = picked;
+        selectedDate = pickedDate;
+        dateToSend = "${picked.year}-${picked.month}-${picked.day}";
       });
     }
   }
@@ -51,7 +70,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         'country': country,
         'number': phoneNumberController.text,
       },
-      'dob': selectedDate.toString(),
+      'dob': dateToSend,
     });
     http.Response response;
     response = await http.post(Uri.parse("$baseUrl/users/"),
@@ -220,12 +239,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
-                          onPressed: () => _selectDate(context),
-                          icon: const Icon(Icons.calendar_month)),
+                        onPressed: () => _selectDate(context),
+                        icon: const Icon(Icons.calendar_month),
+                      ),
                       Text(
                         selectedDate == null
                             ? 'Please select a date'
-                            : selectedDate.toString(),
+                            : "${selectedDate!.year}-${selectedDate!.month}-${selectedDate!.day}",
                       ),
                       Container(
                         width: 10,
