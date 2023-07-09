@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:singo/models/User.dart';
 
@@ -42,5 +42,26 @@ class UserProvider with ChangeNotifier {
   void setRequestToEdit(dynamic requestId) {
     _requestToEdit = requestId;
     notifyListeners();
+  }
+
+  // Timer to periodically call fetchRequests
+  Timer? _timer;
+
+  void startFetchingRequestsPeriodically() {
+    _timer = Timer.periodic(const Duration(seconds: 2), (timer) {
+      fetchRequests();
+    });
+  }
+
+  // Call startFetchingRequestsPeriodically in your desired location, such as in the constructor of the UserProvider class
+  UserProvider() {
+    startFetchingRequestsPeriodically();
+  }
+
+  // Remember to cancel the timer when the UserProvider is disposed
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 }

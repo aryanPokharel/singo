@@ -1,1 +1,1 @@
-const baseUrl = "http://192.168.202.26:80";
+const baseUrl = "https://long-rose-calf-veil.cyclic.app";
