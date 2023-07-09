@@ -59,10 +59,12 @@ class _RequestsScreenState extends State<RequestsScreen> {
 
     {
       for (var item in requestList) {
-        if (item['createdBy'] == myUser.id) {
-          yourList.add(item);
-        } else {
-          globalList.add(item);
+        if (item['performed'] == false) {
+          if (item['createdBy'] == myUser.id) {
+            yourList.add(item);
+          } else {
+            globalList.add(item);
+          }
         }
       }
     }
