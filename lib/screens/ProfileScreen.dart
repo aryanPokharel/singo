@@ -104,7 +104,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 color: const Color.fromARGB(255, 240, 223, 223),
                 child: ListTile(
                   leading: const Icon(Icons.mail),
-                  title: Text(myUser.email.toString()),
+                  title: Text(
+                    myUser.email.toString(),
+                  ),
                 ),
               ),
               Card(

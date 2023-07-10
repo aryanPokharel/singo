@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:singo/components/Loading.dart';
 import 'package:singo/providers/user_provider.dart';
 
 import 'package:http/http.dart' as http;
@@ -94,69 +95,71 @@ class _RequestsScreenState extends State<RequestsScreen> {
         ),
         body: TabBarView(
           children: [
-            ListView.builder(
-              itemCount: globalList.length,
-              itemBuilder: (context, index) {
-                var request = globalList[index];
+            requestList.isEmpty
+                ? const LoadingWidget()
+                : ListView.builder(
+                    itemCount: globalList.length,
+                    itemBuilder: (context, index) {
+                      var request = globalList[index];
 
-                return Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  elevation: 4,
-                  margin: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 10),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 164, 199, 216),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    constraints: const BoxConstraints(maxWidth: 540.0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            request['title'],
-                            style: const TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
+                      return Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        elevation: 4,
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 16.0, vertical: 10),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 164, 199, 216),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          constraints: const BoxConstraints(maxWidth: 540.0),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  request['title'],
+                                  style: const TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 8.0),
+                                Text(
+                                  request['description'],
+                                  style: const TextStyle(fontSize: 16.0),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  'By : ${request['createdBy']}',
+                                  style: const TextStyle(fontSize: 16.0),
+                                ),
+                                const SizedBox(height: 8.0),
+                                Text(
+                                  'Rs.${request['rate']}',
+                                  style: const TextStyle(fontSize: 16.0),
+                                ),
+                                const SizedBox(height: 8.0),
+                                Text(
+                                  'Created : ${request['createdAt']}',
+                                  style: const TextStyle(
+                                    fontSize: 12.0,
+                                    color: Color.fromARGB(255, 67, 63, 63),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          const SizedBox(height: 8.0),
-                          Text(
-                            request['description'],
-                            style: const TextStyle(fontSize: 16.0),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'By : ${request['createdBy']}',
-                            style: const TextStyle(fontSize: 16.0),
-                          ),
-                          const SizedBox(height: 8.0),
-                          Text(
-                            'Rs.${request['rate']}',
-                            style: const TextStyle(fontSize: 16.0),
-                          ),
-                          const SizedBox(height: 8.0),
-                          Text(
-                            'Created : ${request['createdAt']}',
-                            style: const TextStyle(
-                              fontSize: 12.0,
-                              color: Color.fromARGB(255, 67, 63, 63),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
             yourList.isEmpty
                 ? const Center(
                     child: Text("Looks Empty!"),
