@@ -101,55 +101,198 @@ class _RequestsScreenState extends State<RequestsScreen> {
                     itemBuilder: (context, index) {
                       var request = globalList[index];
 
-                      return Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        elevation: 4,
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 16.0, vertical: 10),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 164, 199, 216),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          constraints: const BoxConstraints(maxWidth: 540.0),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      return Container(
+                        height: MediaQuery.of(context).size.height * 0.5,
+                        color: const Color(0x000ffeee),
+                        child: Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: SizedBox(
+                            height: double.infinity,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
-                                  request['title'],
-                                  style: const TextStyle(
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(height: 8.0),
-                                Text(
-                                  request['description'],
-                                  style: const TextStyle(fontSize: 16.0),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  'By : ${request['createdBy']}',
-                                  style: const TextStyle(fontSize: 16.0),
-                                ),
-                                const SizedBox(height: 8.0),
-                                Text(
-                                  'Rs.${request['rate']}',
-                                  style: const TextStyle(fontSize: 16.0),
-                                ),
-                                const SizedBox(height: 8.0),
-                                Text(
-                                  'Created : ${request['createdAt']}',
-                                  style: const TextStyle(
-                                    fontSize: 12.0,
-                                    color: Color.fromARGB(255, 67, 63, 63),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.9,
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                    ),
+                                    color: const Color.fromARGB(
+                                        255, 185, 241, 213),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                request['title'],
+                                                style: const TextStyle(
+                                                  fontSize: 16.0,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              const Text("\$")
+                                            ],
+                                          ),
+                                          const SizedBox(height: 12.0),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                request['createdAt'],
+                                                style: const TextStyle(
+                                                  fontSize: 12.0,
+                                                ),
+                                              ),
+                                              Text(
+                                                '${request['rate']}',
+                                                style: const TextStyle(
+                                                  fontSize: 16.0,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 12.0),
+                                          Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                width: 70.0,
+                                                height: 70.0,
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  border: Border.all(
+                                                    color: Colors.black,
+                                                    width: 3.0,
+                                                  ),
+                                                ),
+                                                child: ClipOval(
+                                                  child: Image.network(
+                                                    'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp',
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(width: 12.0),
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    const Text(
+                                                      '@ramBahadur',
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 5,
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Row(
+                                                          children:
+                                                              List.generate(
+                                                            5,
+                                                            (_) => const Icon(
+                                                              Icons.star,
+                                                              size: 12.0,
+                                                              color: Color(
+                                                                  0xFF1B7B2C),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                            width: 6.0),
+                                                        Row(
+                                                          children: [
+                                                            const SizedBox(
+                                                                width: 8.0),
+                                                            ElevatedButton(
+                                                              onPressed: () {},
+                                                              style:
+                                                                  ElevatedButton
+                                                                      .styleFrom(
+                                                                foregroundColor:
+                                                                    Colors
+                                                                        .black,
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .white,
+                                                                shape:
+                                                                    const CircleBorder(),
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .all(
+                                                                        8.0),
+                                                              ),
+                                                              child: const Icon(
+                                                                  Icons
+                                                                      .comment),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 16.0),
+                                          const Divider(),
+                                          const SizedBox(height: 8.0),
+                                          Text(
+                                            request['description'],
+                                            style: const TextStyle(
+                                              fontSize: 14.0,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 12.0),
+                                          ElevatedButton(
+                                            onPressed: () {},
+                                            style: ElevatedButton.styleFrom(
+                                              foregroundColor: Colors.white,
+                                              backgroundColor: Colors.green,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                              ),
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
+                                            ),
+                                            child: const Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Icon(Icons.access_time),
+                                                SizedBox(width: 8.0),
+                                                Text(
+                                                  'Bid',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 16.0,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ],
