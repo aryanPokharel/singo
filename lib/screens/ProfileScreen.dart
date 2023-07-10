@@ -95,7 +95,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: ListTile(
                   leading: const Icon(Icons.phone),
                   title: Text(
-                      '+${myUser.phone['countryCode'].toString()} ${myUser.phone['number'].toString()}'),
+                      '${myUser.phone['countryCode'].toString()} ${myUser.phone['number'].toString()}'),
                 ),
               ),
               Card(
