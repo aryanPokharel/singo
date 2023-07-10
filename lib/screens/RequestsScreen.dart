@@ -56,7 +56,6 @@ class _RequestsScreenState extends State<RequestsScreen> {
     List<dynamic> yourList = [];
     List<dynamic> globalList = [];
     var myUser = context.watch<UserProvider>().user;
-    var requestToEdit = context.watch<UserProvider>().requestToEdit;
 
     {
       for (var item in requestList) {
