@@ -8,7 +8,22 @@ import 'package:singo/screens/RegisterScreen.dart';
 import 'package:singo/screens/RequestPerformanceScreen.dart';
 import 'package:singo/screens/SplashScreen.dart';
 
+import 'package:awesome_notifications/awesome_notifications.dart';
+
 void main(List<String> args) {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  AwesomeNotifications().initialize('resource://drawable/icon', [
+    NotificationChannel(
+        channelGroupKey: 'basic_channel_group',
+        channelKey: 'basic_channel',
+        channelName: 'Basic notifications',
+        channelDescription: 'Notification channel for basic tests',
+        defaultColor: Colors.green,
+        importance: NotificationImportance.High,
+        ledColor: Colors.white,
+        channelShowBadge: true)
+  ]);
   runApp(
     ChangeNotifierProvider<UserProvider>(
       create: (_) => UserProvider(),

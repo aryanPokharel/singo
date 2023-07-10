@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:singo/components/Loading.dart';
 import 'package:singo/providers/user_provider.dart';
 import 'package:singo/screens/ProfileScreen.dart';
 import 'package:singo/screens/RequestsScreen.dart';
@@ -44,8 +45,9 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       }
     }
-    dynamic createdBy;
+
     Future getCreator(dynamic userId) async {
+      dynamic createdBy;
       final body = jsonEncode({
         'userId': userId,
       });
@@ -56,12 +58,12 @@ class _HomeScreenState extends State<HomeScreen> {
       if (response.statusCode == 200) {
         if (response.body != "Not Found") {
           // print(json.decode(response.body)['fullName']);
-          setState(() {
-            createdBy = json.decode(response.body)['fullName'];
-          });
-          print(createdBy);
+
+          createdBy = json.decode(response.body)['fullName'];
         }
       }
+
+      return json.decode(response.body)['fullName'];
     }
 
     return Scaffold(
@@ -150,84 +152,86 @@ class _HomeScreenState extends State<HomeScreen> {
         child: const Icon(Icons.add),
       ),
       body: SafeArea(
-        child: IndexedStack(
-          index: _selectedIndex,
-          children: [
-            ListView.builder(
-              itemCount: globalList.length,
-              itemBuilder: (context, index) {
-                var request = globalList[index];
-                getCreator(request['createdBy']);
-                return Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
+        child: requestList.isEmpty
+            ? const LoadingWidget()
+            : IndexedStack(
+                index: _selectedIndex,
+                children: [
+                  ListView.builder(
+                    itemCount: globalList.length,
+                    itemBuilder: (context, index) {
+                      var request = globalList[index];
+                      // getCreator(request['createdBy']);
+                      return Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        elevation: 4,
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 16.0, vertical: 10),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 164, 199, 216),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          constraints: const BoxConstraints(maxWidth: 540.0),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  request['title'],
+                                  style: const TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 8.0),
+                                Text(
+                                  request['description'],
+                                  style: const TextStyle(fontSize: 16.0),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  'By : ${getCreator(request['createdBy'])}',
+                                  style: const TextStyle(fontSize: 16.0),
+                                ),
+                                const SizedBox(height: 8.0),
+                                Text(
+                                  'Rs.${request['rate']}',
+                                  style: const TextStyle(fontSize: 16.0),
+                                ),
+                                const SizedBox(height: 8.0),
+                                Text(
+                                  'Created : ${request['createdAt']}',
+                                  style: const TextStyle(
+                                    fontSize: 12.0,
+                                    color: Color.fromARGB(255, 67, 63, 63),
+                                  ),
+                                ),
+                                const SizedBox(height: 8.0),
+                                Text(
+                                  'performed : ${request['performed']}',
+                                  style: const TextStyle(
+                                    fontSize: 12.0,
+                                    color: Color.fromARGB(255, 67, 63, 63),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                  elevation: 4,
-                  margin: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 10),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 164, 199, 216),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    constraints: const BoxConstraints(maxWidth: 540.0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            request['title'],
-                            style: const TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 8.0),
-                          Text(
-                            request['description'],
-                            style: const TextStyle(fontSize: 16.0),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'By : $createdBy',
-                            style: const TextStyle(fontSize: 16.0),
-                          ),
-                          const SizedBox(height: 8.0),
-                          Text(
-                            'Rs.${request['rate']}',
-                            style: const TextStyle(fontSize: 16.0),
-                          ),
-                          const SizedBox(height: 8.0),
-                          Text(
-                            'Created : ${request['createdAt']}',
-                            style: const TextStyle(
-                              fontSize: 12.0,
-                              color: Color.fromARGB(255, 67, 63, 63),
-                            ),
-                          ),
-                          const SizedBox(height: 8.0),
-                          Text(
-                            'performed : ${request['performed']}',
-                            style: const TextStyle(
-                              fontSize: 12.0,
-                              color: Color.fromARGB(255, 67, 63, 63),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-            const RequestsScreen(),
-            const ProfileScreen(),
-          ],
-        ),
+                  const RequestsScreen(),
+                  const ProfileScreen(),
+                ],
+              ),
       ),
     );
   }

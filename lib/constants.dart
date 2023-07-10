@@ -1,1 +1,1 @@
-const baseUrl = "https://long-rose-calf-veil.cyclic.app";
+const baseUrl = "https://fuzzy-tan-beetle.cyclic.app/";

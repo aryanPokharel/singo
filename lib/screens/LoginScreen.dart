@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:motion_toast/motion_toast.dart';
@@ -16,10 +17,29 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  void ininState() {
+    _checkNotificationEnabled() {
+      AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+        if (!isAllowed) {
+          AwesomeNotifications().requestPermissionToSendNotifications();
+        }
+      });
+    }
+
+    super.initState();
+  }
+
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
 
   Future authentication() async {
+    // await AwesomeNotifications().createNotification(
+    //   content: NotificationContent(
+    //       id: 1,
+    //       channelKey: 'basic_channel',
+    //       title: 'User Logged In',
+    //       body: "You have just logged in!"),
+    // );
     http.Response response;
     response = await http.post(
       Uri.parse("$baseUrl/users/login"),

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:provider/provider.dart';
+import 'package:singo/components/Loading.dart';
 
 import 'package:singo/providers/user_provider.dart';
 import 'package:http/http.dart' as http;
@@ -132,14 +133,7 @@ class _EditRequestScreenState extends State<EditRequestScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: !dataReceived
-            ? const Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Fetching Data'),
-                  SizedBox(height: 16.0),
-                  LinearProgressIndicator(),
-                ],
-              )
+            ? const LoadingWidget()
             : Form(
                 child: Column(
                   children: <Widget>[
