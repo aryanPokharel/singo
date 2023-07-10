@@ -93,7 +93,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 width: 320,
                 title: const Text("Failure!"),
                 description: const Text("Couldn't create account!"),
-                icon: Icons.wrong_location)
+                icon: Icons.error)
             .show(context);
       }
     } else {
@@ -131,12 +131,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 padding: const EdgeInsets.only(top: 60.0),
                 child: Center(
                   child: Container(
-                      width: 200,
-                      height: 150,
-                      decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(50.0)),
-                      child: Image.asset('assets/icons/icon.png')),
+                    width: 200,
+                    height: 150,
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(50.0),
+                    ),
+                    child: Image.asset('assets/icons/icon.png'),
+                  ),
                 ),
               ),
               const SizedBox(

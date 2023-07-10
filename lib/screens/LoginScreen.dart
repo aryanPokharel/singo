@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, duplicate_ignore
+
 import 'dart:convert';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
@@ -54,8 +56,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (response.statusCode == 200) {
       if (response.body != "Not found") {
-        // ignore: use_build_context_synchronously
-
         User myUser = User(
           json.decode(response.body)["id"],
           json.decode(response.body)["fullName"],
@@ -68,7 +68,6 @@ class _LoginScreenState extends State<LoginScreen> {
         context.read<UserProvider>().setUser(myUser);
         Navigator.pushNamed(context, "/homePage");
       } else {
-        // ignore: use_build_context_synchronously
         MotionToast(
                 primaryColor: Colors.red,
                 height: 50,
@@ -78,6 +77,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 icon: Icons.wrong_location)
             .show(context);
       }
+    } else {
+      MotionToast(
+              primaryColor: Colors.red,
+              height: 50,
+              width: 320,
+              title: const Text("Server error!"),
+              description: const Text("No response from server"),
+              icon: Icons.wrong_location)
+          .show(context);
     }
   }
 

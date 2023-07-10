@@ -44,6 +44,7 @@ dependencies:
   chewie: ^1.6.0+1
   video_player: ^2.7.0
   awesome_notifications: ^0.7.4+1
+  countries_flag: ^1.0.0
 
 dev_dependencies:
   flutter_test:

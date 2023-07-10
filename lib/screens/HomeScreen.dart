@@ -162,68 +162,59 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemBuilder: (context, index) {
                       var request = globalList[index];
                       // getCreator(request['createdBy']);
-                      return Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
+                      return Container(
+                        height: MediaQuery.of(context).size.height * 0.9,
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        padding: const EdgeInsets.all(15.0),
+                        decoration: const BoxDecoration(
+                          color: Color.fromARGB(255, 164, 199, 216),
                         ),
-                        elevation: 4,
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 16.0, vertical: 10),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 164, 199, 216),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          constraints: const BoxConstraints(maxWidth: 540.0),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  request['title'],
-                                  style: const TextStyle(
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(height: 8.0),
-                                Text(
-                                  request['description'],
-                                  style: const TextStyle(fontSize: 16.0),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  'By : ${getCreator(request['createdBy'])}',
-                                  style: const TextStyle(fontSize: 16.0),
-                                ),
-                                const SizedBox(height: 8.0),
-                                Text(
-                                  'Rs.${request['rate']}',
-                                  style: const TextStyle(fontSize: 16.0),
-                                ),
-                                const SizedBox(height: 8.0),
-                                Text(
-                                  'Created : ${request['createdAt']}',
-                                  style: const TextStyle(
-                                    fontSize: 12.0,
-                                    color: Color.fromARGB(255, 67, 63, 63),
-                                  ),
-                                ),
-                                const SizedBox(height: 8.0),
-                                Text(
-                                  'performed : ${request['performed']}',
-                                  style: const TextStyle(
-                                    fontSize: 12.0,
-                                    color: Color.fromARGB(255, 67, 63, 63),
-                                  ),
-                                ),
-                              ],
+                        constraints: const BoxConstraints(maxWidth: 540.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              request['title'],
+                              style: const TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
+                            const SizedBox(height: 8.0),
+                            Text(
+                              request['description'],
+                              style: const TextStyle(fontSize: 16.0),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'By : ${getCreator(request['createdBy'])}',
+                              style: const TextStyle(fontSize: 16.0),
+                            ),
+                            const SizedBox(height: 8.0),
+                            Text(
+                              'Rs.${request['rate']}',
+                              style: const TextStyle(fontSize: 16.0),
+                            ),
+                            const SizedBox(height: 8.0),
+                            Text(
+                              'Created : ${request['createdAt']}',
+                              style: const TextStyle(
+                                fontSize: 12.0,
+                                color: Color.fromARGB(255, 67, 63, 63),
+                              ),
+                            ),
+                            const SizedBox(height: 8.0),
+                            Text(
+                              'performed : ${request['performed']}',
+                              style: const TextStyle(
+                                fontSize: 12.0,
+                                color: Color.fromARGB(255, 67, 63, 63),
+                              ),
+                            ),
+                          ],
                         ),
                       );
                     },
