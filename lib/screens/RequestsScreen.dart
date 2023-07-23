@@ -331,6 +331,8 @@ class _RequestsScreenState extends State<RequestsScreen> {
                           var request = yourList[index];
 
                           return (Card(
+                            color: const Color.fromARGB(255, 123, 147, 124),
+                            margin: const EdgeInsets.all(10),
                             child: Column(
                               children: [
                                 Container(
