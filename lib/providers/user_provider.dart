@@ -44,11 +44,19 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  // For selected Client
+  dynamic _selectedClient;
+  dynamic get selectedClient => _selectedClient;
+  void setSelectedClient(dynamic clientId) {
+    _selectedClient = clientId;
+    notifyListeners();
+  }
+
   // Timer to periodically call fetchRequests
   Timer? _timer;
 
   void startFetchingRequestsPeriodically() {
-    _timer = Timer.periodic(const Duration(seconds: 2), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 300), (timer) {
       fetchRequests();
     });
   }

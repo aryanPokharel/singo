@@ -3,14 +3,14 @@ import 'package:provider/provider.dart';
 import 'package:singo/providers/user_provider.dart';
 import 'package:countries_flag/countries_flag.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+class ClientProfileScreen extends StatefulWidget {
+  const ClientProfileScreen({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  State<ClientProfileScreen> createState() => _ClientProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ClientProfileScreenState extends State<ClientProfileScreen> {
   Widget _buildInfoItem(String label, String value) {
     return Expanded(
       child: Column(
@@ -132,14 +132,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       backgroundColor: const Color.fromARGB(
                                           255, 221, 229, 217),
                                     ),
-                                    child: const Text('Logout'),
+                                    child: const Text('Chat'),
                                   ),
                                 ),
                                 const SizedBox(width: 16.0),
                                 Expanded(
                                   child: ElevatedButton(
                                     onPressed: () {},
-                                    child: const Text('Edit'),
+                                    child: const Text('Deal'),
                                   ),
                                 ),
                               ],

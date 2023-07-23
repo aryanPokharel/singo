@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -50,7 +52,6 @@ class _RequestPerformanceScreenState extends State<RequestPerformanceScreen> {
 
         if (response.statusCode == 200) {
           if (response.body != "Not found") {
-            // ignore: use_build_context_synchronously
             context.read<UserProvider>().fetchRequests();
             MotionToast(
                     primaryColor: Colors.green,
@@ -61,7 +62,6 @@ class _RequestPerformanceScreenState extends State<RequestPerformanceScreen> {
                     icon: Icons.wrong_location)
                 .show(context);
           } else {
-            // ignore: use_build_context_synchronously
             MotionToast(
                     primaryColor: Colors.red,
                     height: 50,
@@ -77,7 +77,7 @@ class _RequestPerformanceScreenState extends State<RequestPerformanceScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Simple Form Demo'),
+        title: const Text('Provide the info'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

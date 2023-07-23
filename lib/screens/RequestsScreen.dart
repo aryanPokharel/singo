@@ -56,6 +56,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
     List<dynamic> yourList = [];
     List<dynamic> globalList = [];
     var myUser = context.watch<UserProvider>().user;
+    var myClient = context.watch<UserProvider>().selectedClient;
 
     {
       for (var item in requestList) {
@@ -180,10 +181,17 @@ class _RequestsScreenState extends State<RequestsScreen> {
                                                       width: 3.0,
                                                     ),
                                                   ),
-                                                  child: ClipOval(
-                                                    child: Image.network(
-                                                      'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp',
-                                                      fit: BoxFit.cover,
+                                                  child: TextButton(
+                                                    onPressed: () {
+                                                      Navigator.pushNamed(
+                                                          context,
+                                                          '/clientProfilePage');
+                                                    },
+                                                    child: ClipOval(
+                                                      child: Image.network(
+                                                        'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp',
+                                                        fit: BoxFit.cover,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -322,99 +330,81 @@ class _RequestsScreenState extends State<RequestsScreen> {
                         itemBuilder: (context, index) {
                           var request = yourList[index];
 
-                          return Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0),
-                            ),
-                            elevation: 4,
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 16.0, vertical: 10),
-                            child: Stack(
+                          return (Card(
+                            child: Column(
                               children: [
                                 Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.lime,
-                                    borderRadius: BorderRadius.circular(20),
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    request['title'],
+                                    style: const TextStyle(
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                  constraints:
-                                      const BoxConstraints(maxWidth: 540.0),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              request['title'],
-                                              style: const TextStyle(
-                                                fontSize: 20.0,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                            Row(
-                                              children: [
-                                                IconButton(
-                                                  color: Colors.blue,
-                                                  icon: const Icon(Icons.edit),
-                                                  onPressed: () {
-                                                    context
-                                                        .read<UserProvider>()
-                                                        .setRequestToEdit(
-                                                            request['_id']);
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        'Rs.${request['rate']}',
+                                        style: const TextStyle(fontSize: 16.0),
+                                      ),
+                                      const SizedBox(height: 8.0),
+                                      Text(
+                                        request['description'],
+                                        style: const TextStyle(fontSize: 16.0),
+                                      ),
+                                      const SizedBox(height: 16.0),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          IconButton(
+                                            color: Colors.blue,
+                                            icon: const Icon(Icons.edit),
+                                            onPressed: () {
+                                              context
+                                                  .read<UserProvider>()
+                                                  .setRequestToEdit(
+                                                      request['_id']);
 
-                                                    // _toggleOverlay();
-                                                    Navigator.pushNamed(context,
-                                                        '/editRequestScreen');
-                                                  },
-                                                ),
-                                                IconButton(
-                                                  color: Colors.red,
-                                                  icon:
-                                                      const Icon(Icons.delete),
-                                                  onPressed: () {
-                                                    _toggleOverlay();
-
-                                                    setState(() {
-                                                      toDelete = request['_id'];
-                                                    });
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 8.0),
-                                        Text(
-                                          request['description'],
-                                          style:
-                                              const TextStyle(fontSize: 16.0),
-                                        ),
-                                        const SizedBox(height: 8.0),
-                                        Text(
-                                          'Rs.${request['rate']}',
-                                          style:
-                                              const TextStyle(fontSize: 16.0),
-                                        ),
-                                        const SizedBox(height: 8.0),
-                                        Text(
-                                          'Created: ${request['createdAt']}',
-                                          style: const TextStyle(
-                                            fontSize: 12.0,
-                                            color:
-                                                Color.fromARGB(255, 67, 63, 63),
+                                              // _toggleOverlay();
+                                              Navigator.pushNamed(context,
+                                                  '/editRequestScreen');
+                                            },
                                           ),
-                                        ),
-                                      ],
+                                          IconButton(
+                                            color: Colors.red,
+                                            icon: const Icon(Icons.delete),
+                                            onPressed: () {
+                                              _toggleOverlay();
+
+                                              setState(() {
+                                                toDelete = request['_id'];
+                                              });
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  color: Colors.grey[300],
+                                  child: Text(
+                                    'Created: ${request['createdAt']}',
+                                    style: const TextStyle(
+                                      fontSize: 12.0,
+                                      color: Color.fromARGB(255, 67, 63, 63),
                                     ),
                                   ),
                                 ),
                               ],
                             ),
-                          );
+                          ));
                         },
                       ),
                       if (_showOverlay)
